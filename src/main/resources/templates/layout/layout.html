@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8"/>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        @font-face {
+            font-family: 'GmarketSansMedium';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        html > body {
+            font-family: "GmarketSansMedium";
+            text-underline-position: under;
+        }
+    </style>
+</head>
+
+<body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.1/css/bootstrap.min.css">
+
+<header th:if="${#authentication.principal == 'anonymousUser'}">
+    하하호호
+</header>
+
+<section layout:fragment="content">
+    <div>내용</div>
+</section>
+
+<footer>
+
+</footer>
+
+</body>
+
+</html>

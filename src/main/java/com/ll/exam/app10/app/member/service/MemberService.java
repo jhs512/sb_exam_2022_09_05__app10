@@ -1,6 +1,8 @@
 package com.ll.exam.app10.app.member.service;
 
+import com.ll.exam.app10.Util;
 import com.ll.exam.app10.app.member.entity.Member;
+import com.ll.exam.app10.app.member.entity.MemberContext;
 import com.ll.exam.app10.app.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,15 +13,20 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class MemberService implements UserDetailsService {
     @Value("${custom.genFileDirPath}")
@@ -70,7 +77,7 @@ public class MemberService implements UserDetailsService {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("member"));
 
-        return new User(member.getUsername(), member.getPassword(), authorities);
+        return new MemberContext(member, authorities);
     }
 
     public Member join(String username, String password, String email) {
@@ -93,6 +100,12 @@ public class MemberService implements UserDetailsService {
         member.removeProfileImgOnStorage(); // 파일삭제
         member.setProfileImg(null);
 
+        memberRepository.save(member);
+    }
+
+    public void setProfileImgByUrl(Member member, String url) {
+        String filePath = Util.file.downloadImg(url, genFileDirPath + "/member/" + UUID.randomUUID());
+        member.setProfileImg("member/" + new File(filePath).getName());
         memberRepository.save(member);
     }
 }

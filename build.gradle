@@ -45,8 +45,13 @@ dependencies {
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
 
-    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
     implementation "com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0"
+
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+
+    // https://mvnrepository.com/artifact/org.apache.tika/tika-core
+    implementation 'org.apache.tika:tika-core:2.4.1'
+
 }
 
 tasks.named('test') {
