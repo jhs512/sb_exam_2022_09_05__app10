@@ -3,6 +3,7 @@ package com.ll.exam.app10.app.security.service;
 import com.ll.exam.app10.app.member.entity.Member;
 import com.ll.exam.app10.app.member.exception.MemberNotFoundException;
 import com.ll.exam.app10.app.member.repository.MemberRepository;
+import com.ll.exam.app10.app.member.service.MemberService;
 import com.ll.exam.app10.app.security.dto.MemberContext;
 import com.ll.exam.app10.app.security.exception.OAuthTypeMatchNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,8 @@ import java.util.*;
 public class OAuth2UserService extends DefaultOAuth2UserService {
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private MemberService memberService;
 
     @Override
     @Transactional
@@ -64,6 +67,8 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
                             .build();
 
                     memberRepository.save(member);
+
+                    memberService.setProfileImgByUrl(member, "https://picsum.photos/200/300");
                 }
             }
         } else {
