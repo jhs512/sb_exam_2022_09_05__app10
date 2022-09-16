@@ -10,16 +10,7 @@
     <div class="container">
         <h1>프로파일</h1>
 
-        <style>
-            .profile-img {
-                width: 100px;
-                height: 100px;
-                object-fit: cover;
-                border-radius: 10px;
-            }
-        </style>
-
-        <img class="profile-img" th:src="@{|/member/profile/img/${#authentication.principal.id}|}">
+        <img class="w-10 h-10 rounded object-cover" th:src="@{|/member/profile/img/${#authentication.principal.id}|}">
         <div>아이디 : <span th:text="${#authentication.principal.username}"></span></div>
         <div>이메일 : <span th:text="${#authentication.principal.email}"></span></div>
 
