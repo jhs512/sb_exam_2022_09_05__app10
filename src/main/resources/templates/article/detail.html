@@ -10,7 +10,25 @@
     <div class="container">
         <h1>글 상세페이지</h1>
 
-        [[${article}]]
+        <div>
+            작성 : [[${article.createDate}]]
+        </div>
+
+        <div>
+            수정 : [[${article.modifyDate}]]
+        </div>
+
+        <div>
+            작성자 : [[${article.author.username}]]
+        </div>
+
+        <div>
+            제목 : [[${article.subject}]]
+        </div>
+
+        <div>
+            내용 : [[${article.content}]]
+        </div>
     </div>
 </section>
 </body>
