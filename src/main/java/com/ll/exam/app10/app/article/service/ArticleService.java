@@ -37,4 +37,12 @@ public class ArticleService {
     public void addGenFileByUrl(Article article, String typeCode, String type2Code, int fileNo, String url) {
         genFileService.addGenFileByUrl("article", article.getId(), typeCode, type2Code, fileNo, url);
     }
+
+    public Article getForPrintArticleById(Long id) {
+        Article article = getArticleById(id);
+
+        article.getExtra().put("age", 22);
+
+        return article;
+    }
 }
