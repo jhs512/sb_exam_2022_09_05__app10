@@ -47,10 +47,10 @@
                 <span>본문이미지</span>
                 <th:block th:each="i : ${#numbers.sequence(1, 5)}" th:with="genFile=${article.extra.genFileMap.get('common\_\_inBody\_\_' + i)}">
                     <div>
+                        <hr>
                         <span th:text="|${i}번 이미지|"></span>
 
                         <th:block th:if="${genFile != null}">
-                            <hr>
                             <a th:href="@{${genFile.url}}" target="_blank">
                                 <img class="w-10 h-10 object-cover rounded" title="새창에서 크게 보기" th:src="@{${genFile.url}}" alt="">
                                 <br>
@@ -61,7 +61,7 @@
                             </a>
                         </th:block>
 
-                        <hr>
+                        <br>
                         <input type="file" th:name="|common\_\_inBody\_\_${i}|"
                                accept="image/png, image/gif, image/jpeg">
                     </div>
