@@ -10,6 +10,8 @@ import com.ll.exam.app10.app.security.dto.MemberContext;
 import com.ll.exam.app10.util.Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.PermissionDeniedDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.Map;
@@ -56,6 +59,7 @@ public class ArticleController {
         return "redirect:/article/%d?msg=%s".formatted(article.getId(), msg);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}")
     public String showDetail(Model model, @PathVariable Long id) {
         Article article = articleService.getForPrintArticleById(id);
@@ -64,9 +68,22 @@ public class ArticleController {
         return "article/detail";
     }
 
-    @GetMapping("/{id}/json/forDebug")
-    @ResponseBody
-    public Article showDetailJson(Model model, @PathVariable Long id) {
-        return articleService.getForPrintArticleById(id);
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{id}/modify")
+    public String showModify(@AuthenticationPrincipal MemberContext memberContext, Model model, @PathVariable Long id) {
+        Article article = articleService.getForPrintArticleById(id);
+
+        if (memberContext.memberIsNot(article.getAuthor())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+
+        model.addAttribute("article", article);
+
+        return "article/modify";
+    }
+
+    @PostMapping("/{id}/modify")
+    public String modify(@AuthenticationPrincipal MemberContext memberContext, Model model, @PathVariable Long id, @Valid ArticleForm articleForm) {
+        return "/article/%d".formatted(id);
     }
 }
