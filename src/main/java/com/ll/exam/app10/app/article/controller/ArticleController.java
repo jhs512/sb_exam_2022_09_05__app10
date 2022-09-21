@@ -81,7 +81,7 @@ public class ArticleController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/{id}/modify")
-    @ResponseBody
+    @ResponseBody // 임시
     public String modify(@AuthenticationPrincipal MemberContext memberContext, Model model, @PathVariable Long id, @Valid ArticleForm articleForm, MultipartRequest multipartRequest) {
         Article article = articleService.getForPrintArticleById(id);
 
