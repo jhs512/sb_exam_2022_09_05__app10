@@ -43,7 +43,7 @@ public class ArticleController {
     public String write(@AuthenticationPrincipal MemberContext memberContext, @Valid ArticleForm articleForm, MultipartRequest multipartRequest) {
 
         Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
-        Article article = articleService.write(memberContext.getId(), articleForm.getSubject(), articleForm.getContent());
+        Article article = articleService.write(memberContext.getId(), articleForm.getSubject(), articleForm.getContent(), articleForm.getHashTagContents());
 
         RsData<Map<String, GenFile>> saveFilesRsData = genFileService.saveFiles(article, fileMap);
 
