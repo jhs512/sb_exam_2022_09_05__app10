@@ -1,6 +1,6 @@
-package com.ll.exam.app10.app.fileUpload.repository;
+package com.ll.exam.app10.app.gen.repository;
 
-import com.ll.exam.app10.app.fileUpload.entity.GenFile;
+import com.ll.exam.app10.app.gen.entity.GenFile;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

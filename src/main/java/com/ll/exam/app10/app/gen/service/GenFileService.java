@@ -1,10 +1,10 @@
-package com.ll.exam.app10.app.fileUpload.service;
+package com.ll.exam.app10.app.gen.service;
 
 import com.ll.exam.app10.app.article.entity.Article;
 import com.ll.exam.app10.app.base.AppConfig;
 import com.ll.exam.app10.app.base.dto.RsData;
-import com.ll.exam.app10.app.fileUpload.entity.GenFile;
-import com.ll.exam.app10.app.fileUpload.repository.GenFileRepository;
+import com.ll.exam.app10.app.gen.entity.GenFile;
+import com.ll.exam.app10.app.gen.repository.GenFileRepository;
 import com.ll.exam.app10.util.Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.text.html.Option;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -204,5 +205,9 @@ public class GenFileService {
     private void delete(GenFile genFile) {
         deleteFileFromStorage(genFile);
         genFileRepository.delete(genFile);
+    }
+
+    public Optional<GenFile> getById(Long id) {
+        return genFileRepository.findById(id);
     }
 }
