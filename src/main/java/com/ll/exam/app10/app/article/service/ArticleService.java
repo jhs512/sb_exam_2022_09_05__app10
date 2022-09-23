@@ -75,4 +75,8 @@ public class ArticleService {
 
         hashTagService.applyHashTags(article, hashTagContents);
     }
+
+    public List<Article> getArticles() {
+        return articleRepository.findAll();
+    }
 }
