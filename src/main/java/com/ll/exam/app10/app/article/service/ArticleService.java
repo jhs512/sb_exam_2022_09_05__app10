@@ -68,9 +68,11 @@ public class ArticleService {
         return article;
     }
 
-    public void modify(Article article, String subject, String content) {
+    public void modify(Article article, String subject, String content, String hashTagContents) {
         article.setSubject(subject);
         article.setContent(content);
         articleRepository.save(article);
+
+        hashTagService.applyHashTags(article, hashTagContents);
     }
 }
