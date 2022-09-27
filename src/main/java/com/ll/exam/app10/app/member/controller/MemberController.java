@@ -36,7 +36,12 @@ public class MemberController {
 
     @PreAuthorize("isAnonymous()")
     @GetMapping("/login")
-    public String showLogin() {
+    public String showLogin(HttpServletRequest request) {
+        String uri = request.getHeader("Referer");
+        if (uri != null && !uri.contains("/member/login")) {
+            request.getSession().setAttribute("prevPage", uri);
+        }
+
         return "member/login";
     }
 
@@ -80,7 +85,7 @@ public class MemberController {
     public String modify(@AuthenticationPrincipal MemberContext context, String email, MultipartFile profileImg, String profileImg__delete) {
         Member member = memberService.getMemberById(context.getId());
 
-        if ( profileImg__delete != null && profileImg__delete.equals("Y") ) {
+        if (profileImg__delete != null && profileImg__delete.equals("Y")) {
             memberService.removeProfileImg(member);
         }
 
@@ -105,7 +110,7 @@ public class MemberController {
     public ResponseEntity<Object> showProfileImg(@PathVariable Long id) throws URISyntaxException {
         String profileImgUrl = memberService.getMemberById(id).getProfileImgUrl();
 
-        if ( profileImgUrl == null ) {
+        if (profileImgUrl == null) {
             profileImgUrl = "https://via.placeholder.com/100x100.png?text=U_U";
         }
 
